@@ -7,6 +7,12 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 const port = 3000;
 
+app.get('/music', (req, res) => {
+  console.log('hello it`s  me');
+  res.send('bye');
+})
+
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
