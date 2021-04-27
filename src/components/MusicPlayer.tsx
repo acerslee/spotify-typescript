@@ -1,10 +1,18 @@
 import React from 'react';
 
 const MusicPlayer = () => {
+
+  const toggleMusic = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  };
+
   return(
-    <h1>
-      Hi there
-    </h1>
+    <div className = 'music-player'>
+      <h1>
+        Hi
+      </h1>
+      <button onClick = {toggleMusic}>Play Music</button>
+    </div>
   )
 }
 
