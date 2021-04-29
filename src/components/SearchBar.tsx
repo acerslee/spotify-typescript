@@ -6,7 +6,7 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({getMusic}) => {
 
-  const [searchItem, setSearchItem] = useState('');
+  const [searchItem, setSearchItem] = useState<string>('');
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     setSearchItem(event.currentTarget.value)

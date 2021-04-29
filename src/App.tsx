@@ -2,13 +2,13 @@ import React from 'react';
 import Login from './components/Login';
 import SearchBar from './components/SearchBar';
 import MusicPlayer from './components/MusicPlayer';
+import MusicList from './components/MusicList';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 const App: React.FC = () => {
 
   const getMusic = () => {
-    console.log('does it reach')
     axios.get('/music')
     .then(res => console.log(res))
     .catch(err => console.error(err))
@@ -21,10 +21,11 @@ const App: React.FC = () => {
           <Route exact path = '/'>
             <Login />
           </Route>
-          <Route path = '/home'>
+          {/* <Route path = '/'>
             <SearchBar getMusic = {getMusic}/>
             <MusicPlayer />
-          </Route>
+            <MusicList />
+          </Route> */}
         </Switch>
       </BrowserRouter>
     </>

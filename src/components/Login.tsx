@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+
+const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=fc8a244bbf8a42e6931a053e3d03276b&response_type=code&redirect_uri=http://localhost:3001&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state"
+
+
 const Login: React.FC = () => {
 
   const [username, setUsername] = useState<string>('');
@@ -21,7 +25,10 @@ const Login: React.FC = () => {
   return(
     <div className = 'login-page'>
       <h1>Login here</h1>
-      <form className = 'login-form' onSubmit = {handleSubmit}>
+      <a href = {AUTH_URL}>
+        Login spotify
+      </a>
+      {/* <form className = 'login-form' onSubmit = {handleSubmit}>
         <input
           type = 'text'
           value = {username}
@@ -36,7 +43,7 @@ const Login: React.FC = () => {
           type = 'submit'
           value = 'Submit'
         />
-      </form>
+      </form> */}
     </div>
   )
 }
