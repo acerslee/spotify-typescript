@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 
-interface Props {
-  getMusic: Function;
-}
 
-const SearchBar: React.FC<Props> = ({getMusic}) => {
+const SearchBar: React.FC = () => {
 
   const [searchItem, setSearchItem] = useState<string>('');
 
@@ -14,7 +11,6 @@ const SearchBar: React.FC<Props> = ({getMusic}) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    getMusic(searchItem);
   };
 
   return(
