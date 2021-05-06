@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 
 const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=fc8a244bbf8a42e6931a053e3d03276b&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state"
@@ -6,21 +6,21 @@ const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=fc8a244bbf8a4
 
 const Login: React.FC = () => {
 
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  // const [username, setUsername] = useState<string>('');
+  // const [password, setPassword] = useState<string>('');
 
-  const handleUsername = (event: React.FormEvent<HTMLInputElement>) => {
-    setUsername(event.currentTarget.value);
-  };
+  // const handleUsername = (event: React.FormEvent<HTMLInputElement>) => {
+  //   setUsername(event.currentTarget.value);
+  // };
 
-  const handlePassword = (event: React.FormEvent<HTMLInputElement>) => {
-    setPassword(event.currentTarget.value);
-  };
+  // const handlePassword = (event: React.FormEvent<HTMLInputElement>) => {
+  //   setPassword(event.currentTarget.value);
+  // };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
 
-  };
+  // };
 
   return(
     <div className = 'login-page'>

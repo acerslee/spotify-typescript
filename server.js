@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
-const axios = require('axios');
+// const axios = require('axios');
 const cors = require('cors');
 
 require('dotenv').config();
@@ -13,13 +13,6 @@ const port = 4000;
 app.use(cors())
 app.use(bodyParser.json())
 
-// const headers = {
-//   'Content-Type': 'application/x-www-form-urlencoded',
-//   'Authorization': 'Basic' + process.env.REACT_APP_CLIENT_ID + ':' + process.env.REACT_APP_CLIENT_SECRET
-// }
-
-
-
 app.post('/login', (req, res) => {
   const code = req.body.code;
 
@@ -28,7 +21,6 @@ app.post('/login', (req, res) => {
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
     redirectUri: process.env.REACT_APP_REDIRECT_URI
   })
-
 
   spotifyApi.authorizationCodeGrant(code)
     .then(data => {
