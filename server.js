@@ -22,6 +22,8 @@ app.post('/login', (req, res) => {
     redirectUri: process.env.REACT_APP_REDIRECT_URI
   })
 
+  console.log(spotifyApi)
+
   spotifyApi.authorizationCodeGrant(code)
     .then(data => {
       console.log('The token expires in ' + data.body['expires_in']);
