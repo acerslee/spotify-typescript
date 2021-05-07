@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const SearchBar: React.FC = () => {
 
   const [searchItem, setSearchItem] = useState<string>('');
@@ -17,6 +16,7 @@ const SearchBar: React.FC = () => {
     <form className = 'search-bar' onSubmit = {handleSubmit}>
       <input
         type = 'text'
+        placeholder = 'Enter song name or artist'
         value = {searchItem}
         onChange = {handleChange}
       />
