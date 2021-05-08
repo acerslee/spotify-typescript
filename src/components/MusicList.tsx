@@ -2,9 +2,9 @@ import React from 'react';
 
 const MusicList: React.FC = () => {
   return(
-    <div className = 'music-list'>
+    <div className = 'music-list' style = {{overflowY: 'auto'}}>
       <h1>
-        Hello
+        Songs
       </h1>
     </div>
   )
