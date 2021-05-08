@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 interface Props {
   changeSearchState: Function
@@ -6,10 +6,7 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({changeSearchState}) => {
 
-  const [searchItem, setSearchItem] = useState<string>('');
-
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setSearchItem(event.currentTarget.value)
     changeSearchState(event.currentTarget.value);
   };
 
@@ -22,7 +19,6 @@ const SearchBar: React.FC<Props> = ({changeSearchState}) => {
       <input
         type = 'text'
         placeholder = 'Enter song name or artist'
-        value = {searchItem}
         onChange = {handleChange}
       />
       <input type = 'submit' value = 'Submit' />

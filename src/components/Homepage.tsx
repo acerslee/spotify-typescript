@@ -76,7 +76,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     if(!(token as any)) return;
 
     spotifyApi.searchTracks(searchTerm)
-      .then(res => console.log(res))
+      .then(res => setSearchResults(res?.body?.tracks?.items))
       .catch(err => console.error(err))
 
   }, [searchTerm, token])
@@ -85,7 +85,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     <div className = 'homepage'>
       <SearchBar changeSearchState = {changeSearchState}/>
       <MusicPlayer />
-      <MusicList />
+      <MusicList searchResults = {searchResults}/>
     </div>
   )
 };
