@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 interface Props{
   albumImages: any,
@@ -8,29 +9,24 @@ interface Props{
   uri: string
 }
 
+const SongContainer = styled.div`
+  border: 2px solid;
+`
+
 const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, songName, uri}) => {
 
   let renderSmallestImage = albumImages.reduce((smallest: {height: number}, image: {height: number}) => {
     if (image.height < smallest.height) return image
     return smallest;
   })
-  // const [smallestImage, setSmallestImage] = useState('');
-
-  // useEffect(() => {
-  //   let smallest = albumImages[0];
-  //   if (smallest.height < )
-
-  // },[albumImages])
-
-  console.log('albumimage', renderSmallestImage)
 
   return(
-    <div className = 'song'>
+    <SongContainer>
       <img src = {renderSmallestImage.url} alt = 'Album cover' />
       <p>{albumName}</p>
       <p>{artist}</p>
       <p>{songName}</p>
-    </div>
+    </SongContainer>
   )
 };
 
