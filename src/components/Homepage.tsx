@@ -75,10 +75,18 @@ const Homepage: React.FC<Props> = ({code}) => {
     if(!searchTerm) return setSearchResults([]);
     if(!(token as any)) return;
 
+    let cancel = false;
+
     spotifyApi.searchTracks(searchTerm)
-      .then(res => setSearchResults(res?.body?.tracks?.items))
+      .then(res => {
+        if (cancel) return
+        setSearchResults(res?.body?.tracks?.items)
+      })
       .catch(err => console.error(err))
 
+    return () => {
+      (cancel = true)
+    };
   }, [searchTerm, token])
 
   return(

@@ -3,7 +3,9 @@ import MusicDetail from './MusicDetail';
 
 const MusicList = ({searchResults}: {searchResults: (string | number)[] }) => {
 
-  console.log('does it reach here', searchResults);
+  const playMusic = () => {
+    console.log('play music')
+  };
 
   return(
     <div className = 'music-list' style = {{overflowY: 'auto'}}>
@@ -18,6 +20,7 @@ const MusicList = ({searchResults}: {searchResults: (string | number)[] }) => {
           artist = {song.artists[0].name}
           songName = {song.name}
           uri = {song.uri}
+          playMusic = {playMusic}
         />
       ))}
     </div>
