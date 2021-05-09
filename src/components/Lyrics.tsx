@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const LyricsContainer = styled.div`
   white-space: pre;
+  color: #FFFFFC;
 `
 
 interface Props{
@@ -13,7 +14,6 @@ interface Props{
 
 const Lyrics: React.FC<Props> = ({ artist, title }) => {
   const [lyrics, setLyrics] = useState<string>('');
-
 
   useEffect(() => {
     if (artist === '' || title === '') return;

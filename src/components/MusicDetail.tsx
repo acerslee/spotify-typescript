@@ -14,6 +14,10 @@ const SongContainer = styled.div`
   border: 2px solid;
 `
 
+const SongText = styled.p`
+  color: #ffffcf;
+`
+
 const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, title, uri, dropdownSongData}) => {
 
   let renderSmallestImage = albumImages.reduce((smallest: {height: number}, image: {height: number}) => {
@@ -24,9 +28,9 @@ const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, title, u
   return(
     <SongContainer onClick = {() => dropdownSongData(uri, artist, title)}>
       <img src = {renderSmallestImage.url} alt = 'Album cover' />
-      <p>{title}</p>
-      <p>{artist}</p>
-      <p>{albumName}</p>
+      <SongText>{title}</SongText>
+      <SongText>{artist}</SongText>
+      <SongText>{albumName}</SongText>
     </SongContainer>
   )
 };

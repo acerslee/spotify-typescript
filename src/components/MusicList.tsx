@@ -9,7 +9,8 @@ interface Props {
 
 const MusicListContainer = styled.div`
   height: 45vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-style: none;
 `
 
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {

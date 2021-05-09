@@ -5,10 +5,23 @@ import MusicPlayer from './MusicPlayer';
 import Lyrics from './Lyrics';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
+import styled from 'styled-components';
 
 interface Props {
   code: string
 }
+
+const HomepageContainer = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const ListLyricsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
@@ -99,21 +112,23 @@ const Homepage: React.FC<Props> = ({code}) => {
   };
 
   return(
-    <div className = 'homepage'>
+    <HomepageContainer>
       <SearchBar changeSearchState = {changeSearchState}/>
       <MusicPlayer
         token = {token}
         songUri = {songUri}
       />
-      <MusicList
-        searchResults = {searchResults}
-        retrieveSongData = {retrieveSongData}
-      />
-      <Lyrics
-        artist = {songArtist}
-        title = {songTitle}
-      />
-    </div>
+      <ListLyricsContainer>
+        <MusicList
+          searchResults = {searchResults}
+          retrieveSongData = {retrieveSongData}
+        />
+        <Lyrics
+          artist = {songArtist}
+          title = {songTitle}
+        />
+      </ListLyricsContainer>
+    </HomepageContainer>
   )
 };
 

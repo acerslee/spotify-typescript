@@ -1,8 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   changeSearchState: Function
 }
+
+const Searchbar = styled.form`
+  width: 30rem;
+`
 
 const SearchBar: React.FC<Props> = ({changeSearchState}) => {
 
@@ -11,13 +16,13 @@ const SearchBar: React.FC<Props> = ({changeSearchState}) => {
   };
 
   return(
-    <form className = 'search-bar'>
+    <Searchbar>
       <input
         type = 'text'
         placeholder = 'Enter song name or artist'
         onChange = {handleChange}
       />
-    </form>
+    </Searchbar>
   )
 };
 

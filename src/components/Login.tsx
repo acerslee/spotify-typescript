@@ -14,7 +14,6 @@ const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #333333
 `;
 
 //&&& makes styled component styling an absolute priority
