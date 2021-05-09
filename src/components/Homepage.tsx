@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MusicList from './MusicList';
 import SearchBar from './SearchBar';
 import MusicPlayer from './MusicPlayer';
+import Lyrics from './Lyrics';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 
@@ -55,13 +56,14 @@ const useAuth = (code: string) => {
   return accessToken;
 }
 
-
 const Homepage: React.FC<Props> = ({code}) => {
 
   const token = useAuth(code);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any>([]);
   const [songUri, setSongUri] = useState<string>('');
+  const [songArtist, setSongArtist] = useState<string>('');
+  const [songTitle, setSongTitle] = useState<string>('');
 
   const changeSearchState = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -90,15 +92,27 @@ const Homepage: React.FC<Props> = ({code}) => {
     };
   }, [searchTerm, token])
 
-  const retrieveSongUri = (uri: string) => {
+  const retrieveSongData = (uri: string, artist: string, title: string) => {
     setSongUri(uri);
+    setSongArtist(artist);
+    setSongTitle(title);
   };
 
   return(
     <div className = 'homepage'>
       <SearchBar changeSearchState = {changeSearchState}/>
-      <MusicPlayer token = {token} songUri = {songUri}/>
-      <MusicList searchResults = {searchResults} retrieveSongUri = {retrieveSongUri}/>
+      <MusicPlayer
+        token = {token}
+        songUri = {songUri}
+      />
+      <MusicList
+        searchResults = {searchResults}
+        retrieveSongData = {retrieveSongData}
+      />
+      <Lyrics
+        artist = {songArtist}
+        title = {songTitle}
+      />
     </div>
   )
 };

@@ -10,18 +10,13 @@ const SearchBar: React.FC<Props> = ({changeSearchState}) => {
     changeSearchState(event.currentTarget.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
-
   return(
-    <form className = 'search-bar' onSubmit = {handleSubmit}>
+    <form className = 'search-bar'>
       <input
         type = 'text'
         placeholder = 'Enter song name or artist'
         onChange = {handleChange}
       />
-      <input type = 'submit' value = 'Submit' />
     </form>
   )
 };

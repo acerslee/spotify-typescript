@@ -1,21 +1,27 @@
 import React from 'react';
 import MusicDetail from './MusicDetail';
+import styled from 'styled-components';
 
 interface Props {
   searchResults: (string | number)[],
-  retrieveSongUri: Function
+  retrieveSongData: Function
 }
 
-const MusicList: React.FC<Props> = ({ searchResults, retrieveSongUri}) => {
+const MusicListContainer = styled.div`
+  height: 45vh;
+  overflow-y: auto;
+`
 
-  const dropdownSongUri = (uri: string) => {
-    retrieveSongUri(uri)
+const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
+
+  const dropdownSongData = (uri: string, artist: string, title: string) => {
+    retrieveSongData(uri, artist, title)
   };
 
   return(
-    <div className = 'music-list' style = {{overflowY: 'auto'}}>
+    <MusicListContainer>
       <h1>
-        Songs
+        Search Results
       </h1>
       {searchResults.map((song: any) => (
         <MusicDetail
@@ -23,12 +29,12 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongUri}) => {
           albumImages = {song.album.images}
           albumName = {song.album.name}
           artist = {song.artists[0].name}
-          songName = {song.name}
+          title = {song.name}
           uri = {song.uri}
-          dropdownSongUri = {dropdownSongUri}
+          dropdownSongData = {dropdownSongData}
         />
       ))}
-    </div>
+    </MusicListContainer>
   )
 };
 
