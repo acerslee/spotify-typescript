@@ -1,17 +1,16 @@
 import React from 'react';
+import SpotifyPlayer from 'react-spotify-web-playback';
 
-const MusicPlayer: React.FC = () => {
+interface Props{
+  token: string
+  songUri: string
+}
 
-  const toggleMusic = (event: React.MouseEvent<HTMLButtonElement>) => {
-
-  };
-
+const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
+  console.log(token);
   return(
     <div className = 'music-player'>
-      <h1>
-        Hi
-      </h1>
-      <button onClick = {toggleMusic}>Play Music</button>
+      <SpotifyPlayer token = {token} uris = {songUri} />
     </div>
   )
 }

@@ -7,14 +7,14 @@ interface Props{
   artist: string,
   songName: string,
   uri: string,
-  playMusic: Function
+  dropdownSongUri: Function
 }
 
 const SongContainer = styled.div`
   border: 2px solid;
 `
 
-const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, songName, uri, playMusic}) => {
+const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, songName, uri, dropdownSongUri}) => {
 
   let renderSmallestImage = albumImages.reduce((smallest: {height: number}, image: {height: number}) => {
     if (image.height < smallest.height) return image
@@ -22,7 +22,7 @@ const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, songName
   })
 
   return(
-    <SongContainer onClick = {() => playMusic()}>
+    <SongContainer onClick = {() => dropdownSongUri(uri)}>
       <img src = {renderSmallestImage.url} alt = 'Album cover' />
       <p>{albumName}</p>
       <p>{artist}</p>

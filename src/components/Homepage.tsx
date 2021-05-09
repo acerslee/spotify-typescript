@@ -61,6 +61,7 @@ const Homepage: React.FC<Props> = ({code}) => {
   const token = useAuth(code);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any>([]);
+  const [songUri, setSongUri] = useState<string>('');
 
   const changeSearchState = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -89,11 +90,15 @@ const Homepage: React.FC<Props> = ({code}) => {
     };
   }, [searchTerm, token])
 
+  const retrieveSongUri = (uri: string) => {
+    setSongUri(uri);
+  };
+
   return(
     <div className = 'homepage'>
       <SearchBar changeSearchState = {changeSearchState}/>
-      <MusicPlayer />
-      <MusicList searchResults = {searchResults}/>
+      <MusicPlayer token = {token} songUri = {songUri}/>
+      <MusicList searchResults = {searchResults} retrieveSongUri = {retrieveSongUri}/>
     </div>
   )
 };

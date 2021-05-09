@@ -1,10 +1,15 @@
 import React from 'react';
 import MusicDetail from './MusicDetail';
 
-const MusicList = ({searchResults}: {searchResults: (string | number)[] }) => {
+interface Props {
+  searchResults: (string | number)[],
+  retrieveSongUri: Function
+}
 
-  const playMusic = () => {
-    console.log('play music')
+const MusicList: React.FC<Props> = ({ searchResults, retrieveSongUri}) => {
+
+  const dropdownSongUri = (uri: string) => {
+    retrieveSongUri(uri)
   };
 
   return(
@@ -20,7 +25,7 @@ const MusicList = ({searchResults}: {searchResults: (string | number)[] }) => {
           artist = {song.artists[0].name}
           songName = {song.name}
           uri = {song.uri}
-          playMusic = {playMusic}
+          dropdownSongUri = {dropdownSongUri}
         />
       ))}
     </div>
