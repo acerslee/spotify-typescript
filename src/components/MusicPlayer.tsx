@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
 
 interface Props{
@@ -7,10 +7,35 @@ interface Props{
 }
 
 const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
-  console.log(token);
+
+  const [play, setPlay] = useState<boolean>(false);
+
+  useEffect(() => {
+    setPlay(true);
+  },[songUri])
+
   return(
-    <div className = 'music-player'>
-      <SpotifyPlayer token = {token} uris = {songUri} />
+    <div>
+      {token &&
+        <SpotifyPlayer
+          token = {token}
+          uris = {songUri}
+          initialVolume = {0.5}
+          callback = {state => {
+            if (!state.isPlaying) setPlay(false)
+          }}
+          play = {play}
+          showSaveIcon
+          magnifySliderOnHover
+          persistDeviceSelection
+          styles = {{
+            // activeColor: '#fff',
+            // color: '#fff',
+            // bgColor: '#333',
+            sliderColor: '#1cb954'
+          }}
+        />
+      }
     </div>
   )
 }

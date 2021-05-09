@@ -24,9 +24,9 @@ const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, songName
   return(
     <SongContainer onClick = {() => dropdownSongUri(uri)}>
       <img src = {renderSmallestImage.url} alt = 'Album cover' />
-      <p>{albumName}</p>
-      <p>{artist}</p>
       <p>{songName}</p>
+      <p>{artist}</p>
+      <p>{albumName}</p>
     </SongContainer>
   )
 };
