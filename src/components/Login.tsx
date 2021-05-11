@@ -21,14 +21,15 @@ const MiniContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 50vh;
-  width: 35%;
+  height: 55vh;
+  width: 30%;
   border-radius: 40px;
   background-color: #3d3d3d;
 `;
 
 const LoginText = styled.p`
   color: white;
+  text-align: center;
   font-size: 3rem;
   font-family: Arial;
 `
@@ -54,7 +55,7 @@ const Login: React.FC = () => {
         <img
           src = {logo}
           alt = 'logo'
-          style = {{height: '7rem', width: '7rem'}}
+          style = {{height: '8rem', width: '8rem'}}
         />
         <LoginText>Explore your music here</LoginText>
         <LoginButton variant = 'contained'>

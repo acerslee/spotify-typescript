@@ -24,3 +24,11 @@ html{
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.rrs__track{
+  background-color: rgb(204, 204, 204) !important;
+}
+
+.rrs__range{
+  background-color: rgb(28, 185, 84) !important;
+}

@@ -18,7 +18,6 @@ const LyricsText = styled.p`
   font-family: Arial;
 `;
 
-
 interface Props{
   artist: string
   title: string,

@@ -12,6 +12,7 @@ interface Props {
 }
 
 const HomepageContainer = styled.div`
+  margin: 0 auto 0 auto;
   width: 80%;
   display: flex;
   flex-direction: column;
