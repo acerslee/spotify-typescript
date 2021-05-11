@@ -25,8 +25,9 @@ const DetailContainer = styled.div`
 `;
 
 const SongText = styled.p`
-  color: #ffffcf;
+  color: white;
   font-family: Arial;
+  font-size: 1.25rem;
 `
 
 const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, title, uri, dropdownSongData}) => {

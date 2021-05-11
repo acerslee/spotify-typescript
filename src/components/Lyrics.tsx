@@ -5,7 +5,19 @@ import styled from 'styled-components';
 const LyricsContainer = styled.div`
   white-space: pre;
   color: #FFFFFC;
-`
+  height: 50vh;
+  overflow-y: scroll;
+  overflow-style: none;
+  width: 50%;
+`;
+
+const LyricsText = styled.p`
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-family: Arial;
+`;
+
 
 interface Props{
   artist: string
@@ -24,7 +36,7 @@ const Lyrics: React.FC<Props> = ({ artist, title }) => {
 
   return(
     <LyricsContainer>
-      {lyrics}
+      <LyricsText>{lyrics}</LyricsText>
     </LyricsContainer>
   )
 };
