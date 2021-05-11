@@ -16,6 +16,23 @@ const LoginContainer = styled.div`
   align-items: center;
 `;
 
+const MiniContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50vh;
+  width: 35%;
+  border-radius: 40px;
+  background-color: #3d3d3d;
+`;
+
+const LoginText = styled.p`
+  color: white;
+  font-size: 3rem;
+  font-family: Arial;
+`
+
 //&&& makes styled component styling an absolute priority
 const LoginButton = styled(Button)`
   &&&{
@@ -33,19 +50,22 @@ const Login: React.FC = () => {
 
   return(
     <LoginContainer>
-      <img
-        src = {logo}
-        alt = 'logo'
-        style = {{height: '5rem', width: '5rem'}}
-      />
-      <LoginButton variant = 'contained'>
-        <a
-          href = {AUTH_URL}
-          style = {{color: 'white', textDecoration: 'none'}}
-        >
-          Login spotify
-        </a>
-      </LoginButton>
+      <MiniContainer>
+        <img
+          src = {logo}
+          alt = 'logo'
+          style = {{height: '7rem', width: '7rem'}}
+        />
+        <LoginText>Explore your music here</LoginText>
+        <LoginButton variant = 'contained'>
+          <a
+            href = {AUTH_URL}
+            style = {{color: 'white', textDecoration: 'none'}}
+          >
+            Login spotify
+          </a>
+        </LoginButton>
+      </MiniContainer>
     </LoginContainer>
   )
 }

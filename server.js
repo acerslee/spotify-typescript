@@ -25,9 +25,6 @@ app.post('/login', (req, res) => {
 
   spotifyApi.authorizationCodeGrant(code)
     .then(data => {
-      console.log('The token expires in ' + data.body['expires_in']);
-      console.log('The access token is ' + data.body['access_token']);
-      console.log('The refresh token is ' + data.body['refresh_token']);
       res.status(201).json({
         expiresIn: data.body['expires_in'],
         accessToken: data.body['access_token'],

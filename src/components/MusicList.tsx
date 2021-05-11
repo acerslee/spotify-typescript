@@ -13,6 +13,11 @@ const MusicListContainer = styled.div`
   overflow-style: none;
 `
 
+const ListHeading = styled.h1`
+  color: white;
+  font-family: Arial;
+`
+
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
 
   const dropdownSongData = (uri: string, artist: string, title: string) => {
@@ -21,9 +26,11 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
 
   return(
     <MusicListContainer>
-      <h1>
-        Search Results
-      </h1>
+      {searchResults.length !== 0 &&
+        <ListHeading>
+          Search Results
+        </ListHeading>
+      }
       {searchResults.map((song: any) => (
         <MusicDetail
           key = {song.uri}
