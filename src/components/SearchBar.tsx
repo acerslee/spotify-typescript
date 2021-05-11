@@ -5,9 +5,11 @@ interface Props {
   changeSearchState: Function
 }
 
-const Searchbar = styled.form`
-  width: 30rem;
-`
+const InputSearch = styled.input`
+  width: 30%;
+  padding: 0.5rem;
+  margin: 0.5rem 0.5rem;
+`;
 
 const SearchBar: React.FC<Props> = ({changeSearchState}) => {
 
@@ -16,14 +18,14 @@ const SearchBar: React.FC<Props> = ({changeSearchState}) => {
   };
 
   return(
-    <Searchbar>
-      <input
+    <form style = {{width: '100%', textAlign: 'center'}}>
+      <InputSearch
         type = 'text'
         placeholder = 'Enter song name or artist'
         onChange = {handleChange}
       />
-    </Searchbar>
-  )
+    </form>
+  );
 };
 
 export default SearchBar;
