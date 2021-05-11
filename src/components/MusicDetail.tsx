@@ -11,11 +11,22 @@ interface Props{
 }
 
 const SongContainer = styled.div`
-  border: 2px solid;
+  border: 1.2px solid;
+  display: flex;
+  flex-direction: row;
+  height: 20%;
 `
+
+const DetailContainer = styled.div`
+  margin-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 const SongText = styled.p`
   color: #ffffcf;
+  font-family: Arial;
 `
 
 const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, title, uri, dropdownSongData}) => {
@@ -28,9 +39,11 @@ const MusicDetail: React.FC<Props> = ({ albumImages, albumName, artist, title, u
   return(
     <SongContainer onClick = {() => dropdownSongData(uri, artist, title)}>
       <img src = {renderSmallestImage.url} alt = 'Album cover' />
-      <SongText>{title}</SongText>
-      <SongText>{artist}</SongText>
-      <SongText>{albumName}</SongText>
+      <DetailContainer>
+        <SongText>{title}</SongText>
+        <SongText>{artist}</SongText>
+        <SongText>{albumName}</SongText>
+      </DetailContainer>
     </SongContainer>
   )
 };

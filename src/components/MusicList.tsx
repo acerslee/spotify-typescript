@@ -11,11 +11,13 @@ const MusicListContainer = styled.div`
   height: 45vh;
   overflow-y: scroll;
   overflow-style: none;
+  width: 50%;
 `
 
 const ListHeading = styled.h1`
   color: white;
   font-family: Arial;
+  margin: 0.5rem 0.5rem;
 `
 
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
