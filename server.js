@@ -23,13 +23,28 @@ app.post('/login', (req, res) => {
     redirectUri: process.env.REACT_APP_REDIRECT_URI
   })
 
+  //object to store all returned data from the api calls below
+  let userJSON = {};
+
   spotifyApi.authorizationCodeGrant(code)
     .then(data => {
-      res.status(201).json({
-        expiresIn: data.body['expires_in'],
-        accessToken: data.body['access_token'],
-        refreshToken: data.body['refresh_token']
-      })
+      userJSON['expiresIn'] = data.body['expires_in']
+      userJSON['accessToken'] = data.body['access_token']
+      userJSON['refreshToken'] = data.body['refresh_token']
+
+      //retrieve the current user's info
+      spotifyApi.setAccessToken(data.body['access_token']);
+      return spotifyApi.getMe();
+    })
+    .then(data => {
+      userJSON['name'] = data.body['display_name'];
+      userJSON['email'] = data.body['email'];
+
+      const image = data.body.images[0].url;
+      userJSON['image'] = image;
+      userJSON['product'] = data.body['product'];
+
+      res.status(201).send(userJSON);
     })
     .catch(err => {
       res.status(500).send(err);
@@ -68,6 +83,24 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
     res.status(500).send(err);
   }
 })
+
+// app.post('/user', (req, res) => {
+
+//   console.log(req.body);
+//   const spotifyApi = new SpotifyWebApi({
+//     clientId: process.env.REACT_APP_CLIENT_ID,
+//     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
+//     redirectUri: process.env.REACT_APP_REDIRECT_URI,
+//   })
+
+//   spotifyApi.getMe()
+//     .then(data => res.send(data))
+//     .catch(err => {
+//       // console.log(err)
+//       res.status(500).send(err)
+//     })
+// });
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
