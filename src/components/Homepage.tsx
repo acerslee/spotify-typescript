@@ -3,6 +3,7 @@ import MusicList from './MusicList';
 import SearchBar from './SearchBar';
 import MusicPlayer from './MusicPlayer';
 import Lyrics from './Lyrics';
+import Profile from './Profile';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 import styled from 'styled-components';
@@ -28,57 +29,79 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
 })
 
-const useAuth = (code: string) => {
-  const [accessToken, setAccessToken] = useState<string>('');
-  const [refreshToken, setRefreshToken] = useState<string>('');
-  const [expiresIn, setExpiresIn] = useState<number>(0);
-
-  useEffect(() => {
-    axios.post('http://localhost:4000/login', {
-      code
-    })
-      .then(res => {
-        console.log('data', res.data)
-        setAccessToken(res.data.accessToken);
-        setRefreshToken(res.data.refreshToken);
-        setExpiresIn(res.data.expiresIn);
-        (window as any).history.pushState({}, null, '/home');
-      })
-      .catch(() => {
-        (window as any).location = '/'
-      })
-  },[code])
-
-  useEffect(() =>{
-    if (!refreshToken || !expiresIn) return;
-
-    const intervalCall = setInterval(() => {
-      axios.post('http://localhost:4000/refresh', {
-        refreshToken
-      })
-        .then(res => {
-          setAccessToken(res.data.accessToken);
-          setExpiresIn(res.data.expiresIn);
-        })
-        .catch(() => {
-          (window as any).location = '/'
-        })
-    }, (expiresIn - 60) * 1000)
-
-    return () => clearInterval(intervalCall);
-  },[refreshToken, expiresIn])
-
-  return accessToken;
+export interface UserInfo{
+  username: string,
+  email: string,
+  image: string,
+  product: string
 }
 
 const Homepage: React.FC<Props> = ({code}) => {
 
-  const token = useAuth(code);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any>([]);
   const [songUri, setSongUri] = useState<string>('');
   const [songArtist, setSongArtist] = useState<string>('');
   const [songTitle, setSongTitle] = useState<string>('');
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    username: '',
+    email: '',
+    image: '',
+    product: ''
+})
+
+  const useAuth = (code: string) => {
+
+    const [accessToken, setAccessToken] = useState<string>('');
+    const [refreshToken, setRefreshToken] = useState<string>('');
+    const [expiresIn, setExpiresIn] = useState<number>(0);
+
+    useEffect(() => {
+      axios.post('http://localhost:4000/login', {
+        code
+      })
+        .then(res => {
+          setAccessToken(res.data.accessToken);
+          setRefreshToken(res.data.refreshToken);
+          setExpiresIn(res.data.expiresIn);
+          setUserInfo(prevUserInfo => ({
+            ...prevUserInfo,
+            username: res.data.name,
+            email: res.data.email,
+            image: res.data.image,
+            product: res.data.product
+          }));
+          (window as any).history.pushState({}, null, '/home');
+        })
+        .catch(() => {
+          (window as any).location = '/'
+        })
+    },[code])
+
+    useEffect(() =>{
+      if (!refreshToken || !expiresIn) return;
+
+      const intervalCall = setInterval(() => {
+        axios.post('http://localhost:4000/refresh', {
+          refreshToken
+        })
+          .then(res => {
+            setAccessToken(res.data.accessToken);
+            setExpiresIn(res.data.expiresIn);
+          })
+          .catch(() => {
+            (window as any).location = '/'
+          })
+      }, (expiresIn - 60) * 1000)
+
+      return () => clearInterval(intervalCall);
+    },[refreshToken, expiresIn])
+
+
+    return accessToken;
+  };
+
+  const token = useAuth(code);
 
   const changeSearchState = (searchValue: string) => {
     setSearchTerm(searchValue);
@@ -116,6 +139,7 @@ const Homepage: React.FC<Props> = ({code}) => {
   return(
     <HomepageContainer>
       <SearchBar changeSearchState = {changeSearchState}/>
+      <Profile userInfo = {userInfo} />
       <MusicPlayer
         token = {token}
         songUri = {songUri}
