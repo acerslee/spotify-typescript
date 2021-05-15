@@ -52,6 +52,10 @@ const Homepage: React.FC<Props> = ({code}) => {
     product: ''
   });
 
+  /* states to track which sidebar items is clicked */
+  const [showList, setShowList] = useState<boolean>(true);
+  const [showLyrics, setShowLyrics] = useState<boolean>(false);
+
   const useAuth = (code: string) => {
 
     const [accessToken, setAccessToken] = useState<string>('');
@@ -138,21 +142,30 @@ const Homepage: React.FC<Props> = ({code}) => {
     setSearchTerm(searchValue);
   };
 
+  const renderSidebarItem = (item: string) => {
+    setShowList(!showList);
+    setShowLyrics(!showLyrics);
+  };
+
   return(
     <HomepageContainer>
       <SearchAndProfileContainer>
         <SearchBar changeSearchState = {changeSearchState}/>
         <Profile userInfo = {userInfo} />
       </SearchAndProfileContainer>
-      <MusicList
-        searchResults = {searchResults}
-        retrieveSongData = {retrieveSongData}
-      />
-      {/* <Lyrics
-        artist = {songArtist}
-        title = {songTitle}
-      /> */}
-      <Sidebar />
+      {showList &&
+        <MusicList
+          searchResults = {searchResults}
+          retrieveSongData = {retrieveSongData}
+        />
+      }
+      {showLyrics &&
+        <Lyrics
+          artist = {songArtist}
+          title = {songTitle}
+        />
+      }
+      <Sidebar renderSidebarItem = {renderSidebarItem} />
       <MusicPlayer
         token = {token}
         songUri = {songUri}

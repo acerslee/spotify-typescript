@@ -5,10 +5,9 @@ import styled from 'styled-components';
 const LyricsContainer = styled.div`
   white-space: pre;
   color: #FFFFFC;
-  height: 50vh;
+  height: 100vh;
   overflow-y: scroll;
   overflow-style: none;
-  width: 50%;
 `;
 
 const LyricsText = styled.p`
