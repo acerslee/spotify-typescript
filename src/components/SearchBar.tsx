@@ -6,7 +6,7 @@ interface Props {
 }
 
 const InputSearch = styled.input`
-  width: 30%;
+  width: 100%;
   padding: 0.5rem;
   margin: 0.5rem 0.5rem;
 `;
@@ -18,7 +18,7 @@ const SearchBar: React.FC<Props> = ({changeSearchState}) => {
   };
 
   return(
-    <form style = {{width: '100%', textAlign: 'center'}}>
+    <form className = 'search-bar'>
       <InputSearch
         type = 'text'
         placeholder = 'Enter song name or artist'

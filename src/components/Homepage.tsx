@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import MusicPlayer from './MusicPlayer';
 import Lyrics from './Lyrics';
 import Profile from './Profile';
+import Sidebar from './Sidebar';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 import styled from 'styled-components';
@@ -18,12 +19,13 @@ const HomepageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
-const ListLyricsContainer = styled.div`
+const SearchAndProfileContainer = styled.div`
   display: flex;
   flex-direction: row;
-`
+  justify-content: space-between;
+`;
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
@@ -125,7 +127,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     };
   }, [searchTerm, token])
 
-  /*helper functions to be passed down to child components*/
+  /*helper state-data functions to be passed down to child components*/
   const retrieveSongData = (uri: string, artist: string, title: string) => {
     setSongUri(uri);
     setSongArtist(artist);
@@ -138,22 +140,23 @@ const Homepage: React.FC<Props> = ({code}) => {
 
   return(
     <HomepageContainer>
-      <SearchBar changeSearchState = {changeSearchState}/>
-      <Profile userInfo = {userInfo} />
+      <SearchAndProfileContainer>
+        <SearchBar changeSearchState = {changeSearchState}/>
+        <Profile userInfo = {userInfo} />
+      </SearchAndProfileContainer>
+      <MusicList
+        searchResults = {searchResults}
+        retrieveSongData = {retrieveSongData}
+      />
+      {/* <Lyrics
+        artist = {songArtist}
+        title = {songTitle}
+      /> */}
+      <Sidebar />
       <MusicPlayer
         token = {token}
         songUri = {songUri}
       />
-      <ListLyricsContainer>
-        <MusicList
-          searchResults = {searchResults}
-          retrieveSongData = {retrieveSongData}
-        />
-        <Lyrics
-          artist = {songArtist}
-          title = {songTitle}
-        />
-      </ListLyricsContainer>
     </HomepageContainer>
   )
 };

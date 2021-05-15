@@ -8,10 +8,9 @@ interface Props {
 }
 
 const MusicListContainer = styled.div`
-  height: 50vh;
+  height: 100vh;
   overflow-y: scroll;
   overflow-style: none;
-  width: 50%;
 `;
 
 const ListHeading = styled.h1`

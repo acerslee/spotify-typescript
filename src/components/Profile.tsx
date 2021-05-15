@@ -12,9 +12,16 @@ interface Props{
   userInfo: UserInfo
 }
 
+const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const ProfilePicture = styled.img`
-  height: 70px;
-  width: 70px;
+  height: 3em;
+  width: 3em;
+  border-radius: 5em;
 `;
 
 const Username = styled.p`
@@ -25,19 +32,16 @@ const ProfileStatus = styled.p`
   color: white;
 `;
 
-const Profile: React.FC<Props> = ({ userInfo }) => {
-
-  return(
-    <>
-    {userInfo.email !== '' &&
-      <div className = 'profile-container'>
-        <ProfileStatus>{userInfo.product.toUpperCase()}</ProfileStatus>
-        <ProfilePicture src = {userInfo.image} alt = 'profile-pic' />
-        <Username>{userInfo.username}</Username>
-      </div>
-    }
-    </>
-  )
-};
+const Profile: React.FC<Props> = ({ userInfo }) => (
+  <>
+  {userInfo.email !== '' &&
+    <ProfileContainer>
+      <ProfileStatus>{userInfo.product.toUpperCase()}</ProfileStatus>
+      <ProfilePicture src = {userInfo.image} alt = 'profile-pic' />
+      <Username>{userInfo.username}</Username>
+    </ProfileContainer>
+  }
+  </>
+);
 
 export default Profile;

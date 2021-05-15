@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import SpotifyPlayer from 'react-spotify-web-playback';
+import styled from 'styled-components';
 
 interface Props{
   token: string
   songUri: string
 }
+
+const MusicPlayerContainer = styled.div`
+  position: fixed;
+  width: 80%;
+  bottom: 0%;
+`;
 
 const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
 
@@ -15,7 +22,7 @@ const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
   },[songUri])
 
   return(
-    <div>
+    <MusicPlayerContainer>
       {token &&
         <SpotifyPlayer
           token = {token}
@@ -36,7 +43,7 @@ const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
           }}
         />
       }
-    </div>
+    </MusicPlayerContainer>
   )
 }
 
