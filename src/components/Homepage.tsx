@@ -48,7 +48,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     email: '',
     image: '',
     product: ''
-})
+  });
 
   const useAuth = (code: string) => {
 
@@ -97,15 +97,10 @@ const Homepage: React.FC<Props> = ({code}) => {
       return () => clearInterval(intervalCall);
     },[refreshToken, expiresIn])
 
-
     return accessToken;
   };
 
   const token = useAuth(code);
-
-  const changeSearchState = (searchValue: string) => {
-    setSearchTerm(searchValue);
-  };
 
   useEffect(() => {
     if(!(token as any)) return
@@ -130,10 +125,15 @@ const Homepage: React.FC<Props> = ({code}) => {
     };
   }, [searchTerm, token])
 
+  /*helper functions to be passed down to child components*/
   const retrieveSongData = (uri: string, artist: string, title: string) => {
     setSongUri(uri);
     setSongArtist(artist);
     setSongTitle(title);
+  };
+
+  const changeSearchState = (searchValue: string) => {
+    setSearchTerm(searchValue);
   };
 
   return(

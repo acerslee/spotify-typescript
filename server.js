@@ -84,24 +84,6 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
   }
 })
 
-// app.post('/user', (req, res) => {
-
-//   console.log(req.body);
-//   const spotifyApi = new SpotifyWebApi({
-//     clientId: process.env.REACT_APP_CLIENT_ID,
-//     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-//     redirectUri: process.env.REACT_APP_REDIRECT_URI,
-//   })
-
-//   spotifyApi.getMe()
-//     .then(data => res.send(data))
-//     .catch(err => {
-//       // console.log(err)
-//       res.status(500).send(err)
-//     })
-// });
-
-
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
