@@ -19,17 +19,22 @@ const ProfileContainer = styled.div`
 `;
 
 const ProfilePicture = styled.img`
-  height: 3em;
-  width: 3em;
+  height: 2.5em;
+  width: 2.5em;
   border-radius: 5em;
+  margin-right: 0.5em;
 `;
 
 const Username = styled.p`
   color: white;
+  font-family: Arial;
 `;
 
 const ProfileStatus = styled.p`
-  color: white;
+  margin-right: 3em;
+  font-size: 0.8em;
+  color: gold;
+  letter-spacing: 2px;
 `;
 
 const Profile: React.FC<Props> = ({ userInfo }) => (

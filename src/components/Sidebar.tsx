@@ -14,11 +14,16 @@ const SidebarContainer = styled.div`
 
 const MenuItem = styled.div`
   height: 10vh;
-  border: 1px solid;
-  border-color: white;
+  font-family: Arial;
+  margin-left: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ItemText = styled.p`
+  margin-top: 0.3em;
   color:white;
 `;
 
@@ -31,7 +36,10 @@ const Sidebar: React.FC<Props> = ({renderSidebarItem}) => (
         <MenuItem
           key = {index}
           onClick = {() => renderSidebarItem(item)}>
-          {item === 'Songs' ? <FaList /> : <FaAmilia />}
+          {item === 'Songs'
+            ? <FaList style = {{color: 'white'}} />
+            : <FaAmilia style = {{color: 'white'}} />
+          }
           <ItemText>{item}</ItemText>
         </MenuItem>
       )

@@ -122,6 +122,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     spotifyApi.searchTracks(searchTerm)
       .then(res => {
         if (cancel) return
+        console.log(res)
         setSearchResults(res?.body?.tracks?.items)
       })
       .catch(err => console.error(err))
@@ -143,6 +144,7 @@ const Homepage: React.FC<Props> = ({code}) => {
   };
 
   const renderSidebarItem = (item: string) => {
+    /*param will be used later when i add more stuff */
     setShowList(!showList);
     setShowLyrics(!showLyrics);
   };

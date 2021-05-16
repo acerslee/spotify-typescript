@@ -40,6 +40,7 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
           artist = {song.artists[0].name}
           title = {song.name}
           uri = {song.uri}
+          duration = {song.duration_ms}
           dropdownSongData = {dropdownSongData}
         />
       ))}

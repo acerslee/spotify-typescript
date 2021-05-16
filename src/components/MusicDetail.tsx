@@ -7,6 +7,7 @@ interface Props{
   artist: string,
   title: string,
   uri: string,
+  duration: number, //coming in as ms
   dropdownSongData: Function
 }
 
@@ -14,7 +15,7 @@ const SongContainer = styled.div`
   border: 1.2px solid;
   display: flex;
   flex-direction: row;
-  height: 20%;
+  height: 10vh;
 `
 
 const DetailContainer = styled.div`
