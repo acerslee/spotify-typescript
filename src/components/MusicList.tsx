@@ -1,14 +1,11 @@
 import React from 'react';
-import MusicDetail from './MusicDetail';
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 interface Column {
@@ -32,10 +29,10 @@ interface Props {
   retrieveSongData: Function
 }
 
-const MusicListContainer = styled.div`
-  height: 100vh;
-  overflow-y: scroll;
-  overflow-style: none;
+const AlbumImage = styled.img`
+  height: 2em;
+  width: 2em;
+  margin-right: 1em;
 `;
 
 const ListHeading = styled.h1`
@@ -49,8 +46,19 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    height: '80vh'
   },
+  cell: {
+    color: '#cfcfcf',
+    borderBottom: 'none'
+  },
+  cellFlexBox: {
+    borderBottom: 'none',
+    color: '#cfcfcf',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
 });
 
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
@@ -58,27 +66,49 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
   const classes = useStyles();
 
   const dropdownSongData = (uri: string, artist: string, title: string) => {
-    console.log(uri, artist, title);
-    // retrieveSongData(uri, artist, title)
+    retrieveSongData(uri, artist, title)
+  };
+
+  const convertTime = (millis: number) => {
+    let minutes = Math.floor(millis / 60000);
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+
+    return (
+      Number(seconds) === 60 ?
+      (minutes + 1) + '.00' :
+      minutes + ':' + (Number(seconds) < 10 ? '0' : '') + seconds
+    );
+  };
+
+  const renderSmallestImage = (images: any) => {
+    let returnedImage = images[0];
+    for (let i = 1; i < images.length; i++) {
+      if (images[i].height < returnedImage.height) returnedImage = images[i]
+    }
+    return returnedImage.url;
   };
 
   return(
-    <MusicListContainer>
+    <div className = 'music-container'>
       {searchResults.length !== 0 &&
         <ListHeading>
           Search Results
         </ListHeading>
       }
       <TableContainer className = {classes.container}>
-        <Table stickyHeader  aria-label = 'sticky table'>
+        <Table stickyHeader = {true} aria-label = 'sticky table'>
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (
                 <TableCell
                   key = {index}
-                  style = {{minWidth: column.minWidth}}
+                  className = {classes.cell}
+                  style = {{
+                      minWidth: column.minWidth,
+                      borderBottom: 'solid 1px'
+                    }}
                 >
-                  {column.label}
+                  {column.label.toUpperCase()}
                 </TableCell>
               ))}
             </TableRow>
@@ -86,30 +116,25 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
           <TableBody>
             {searchResults.map((song: any, index: number) => {
               return(
-                <TableRow key = {index} onClick = {() => dropdownSongData(song.uri, song.name,song.artists[0].name)}>
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{song.name}</TableCell>
-                  <TableCell>{song.artists[0].name}</TableCell>
-                  <TableCell>{song.album.name}</TableCell>
-                  <TableCell>{song.duration_ms}</TableCell>
+                <TableRow
+                  key = {index}
+                  onClick = {() => dropdownSongData(song.uri, song.name,song.artists[0].name)}
+                >
+                  <TableCell className = {classes.cell}>{index + 1}</TableCell>
+                  <TableCell className = {classes.cellFlexBox}>
+                    <AlbumImage src = {renderSmallestImage(song.album.images)} alt = 'album placeholder'/>
+                    {song.name}
+                  </TableCell>
+                  <TableCell className = {classes.cell}>{song.artists[0].name}</TableCell>
+                  <TableCell className = {classes.cell}>{song.album.name}</TableCell>
+                  <TableCell className = {classes.cell}>{convertTime(song.duration_ms)}</TableCell>
                 </TableRow>
               )
-              // <MusicDetail
-              //   key = {song.uri}
-              //   albumImages = {song.album.images}
-              //   albumName = {song.album.name}
-              //   artist = {song.artists[0].name}
-              //   title = {song.name}
-              //   uri = {song.uri}
-              //   duration = {song.duration_ms}
-              //   dropdownSongData = {dropdownSongData}
-              // />
             })}
           </TableBody>
         </Table>
-
       </TableContainer>
-    </MusicListContainer>
+    </div>
   )
 };
 
