@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const LyricsContainer = styled.div`
   white-space: pre;
   color: #FFFFFC;
-  height: 100vh;
+  height: 85vh;
   overflow-y: scroll;
   overflow-style: none;
 `;

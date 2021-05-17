@@ -145,8 +145,13 @@ const Homepage: React.FC<Props> = ({code}) => {
 
   const renderSidebarItem = (item: string) => {
     /*param will be used later when i add more stuff */
-    setShowList(!showList);
-    setShowLyrics(!showLyrics);
+    if (item === 'Songs') {
+      setShowList(true);
+      setShowLyrics(false);
+    } else {
+      setShowList(false);
+      setShowLyrics(true);
+    }
   };
 
   return(

@@ -3,8 +3,8 @@
   padding: 0;
 }
 
-html{
-  background-color: #333333;
+html, .MuiTableCell-stickyHeader{
+  background-color: #1d1c1c !important;
 }
 
 ::-webkit-scrollbar {
@@ -31,8 +31,4 @@ html{
 
 .rrs__range{
   background-color: rgb(28, 185, 84) !important;
-}
-
-.MuiTableCell-stickyHeader{
-  background-color:#333333 !important;
 }

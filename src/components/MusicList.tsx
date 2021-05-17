@@ -12,6 +12,7 @@ interface Column {
   id: 'index' | 'title' | 'artist' | 'album' | 'duration';
   label: string;
   minWidth?: number;
+  maxWidth?: number;
   align?: 'right';
   format?: (value: number) => string;
 }
@@ -19,8 +20,8 @@ interface Column {
 const columns: Column[] = [
   { id: 'index', label: '#'},
   { id: 'title', label: 'Title', minWidth: 100 },
-  { id: 'artist', label: 'Artist'},
-  { id: 'album', label: 'Album'},
+  { id: 'artist', label: 'Artist', maxWidth: 100},
+  { id: 'album', label: 'Album', maxWidth: 200},
   { id: 'duration', label: 'Duration'}
 ];
 
@@ -47,6 +48,11 @@ const useStyles = makeStyles({
   },
   container: {
     height: '80vh'
+  },
+  row: {
+    '&:hover':{
+      background: '#333333'
+    },
   },
   cell: {
     color: '#cfcfcf',
@@ -118,6 +124,7 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
               return(
                 <TableRow
                   key = {index}
+                  className = {classes.row}
                   onClick = {() => dropdownSongData(song.uri, song.name,song.artists[0].name)}
                 >
                   <TableCell className = {classes.cell}>{index + 1}</TableCell>
