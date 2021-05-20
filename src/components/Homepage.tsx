@@ -106,7 +106,7 @@ const Homepage: React.FC<Props> = ({code}) => {
       }, (expiresIn - 60) * 1000)
 
       return () => clearInterval(intervalCall);
-    },[refreshToken, expiresIn])
+    },[refreshToken])
 
     return accessToken;
   };
@@ -186,7 +186,10 @@ const Homepage: React.FC<Props> = ({code}) => {
           />
         }
         {showPlaylists &&
-          <Playlists userInfo = {userInfo} accessToken = {accessToken}/>
+          <Playlists
+            userInfo = {userInfo}
+            accessToken = {accessToken}
+          />
         }
         <MusicPlayer
           token = {token}

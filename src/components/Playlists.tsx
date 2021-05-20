@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Playlist from './Playlist';
 import styled from 'styled-components';
-import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 
 type UserInfo = {
@@ -13,41 +13,46 @@ interface Props{
   accessToken: string
 }
 
+const PlaylistHeader = styled.h1`
+  font-family: Arial
+`
+
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
 });
 
-
-
 const Playlists: React.FC<Props> = ({ userInfo, accessToken }) => {
+  const [userPlaylists, setUserPlaylists] = useState<any>([])
 
-  // console.log(userInfo);
-
-  const [userPlaylists, setUserPlaylists] = useState<any>(null)
-
-    // useEffect(() => {
-    //   if(!(accessToken as any)) return
-    //   spotifyApi.setAccessToken(accessToken);
-    // }, [accessToken])
-
-    useEffect(() => {
+  useEffect(() => {
     if(!userInfo) return setUserPlaylists([]);
-    // if(!(token as any)) return;
 
     spotifyApi.setAccessToken(accessToken)
 
     spotifyApi.getUserPlaylists(userInfo.userId)
       .then(res => {
-        console.log(res);
+        console.log(res.body.items);
+        setUserPlaylists(res.body.items)
       })
       .catch(err => console.error(err))
-
   },[userInfo, accessToken])
 
   return(
-    <div style = {{color: 'white'}}>placeholder
-      <h1>My playlists</h1>
-    </div>
+    <>
+    {userPlaylists &&
+      <div style = {{color: 'white'}}>
+        <PlaylistHeader>My Playlists</PlaylistHeader>
+        {userPlaylists.map((playlist: any, index: number) => (
+          <Playlist
+            key = {index}
+            name = {playlist.name}
+            image = {playlist.images}
+            tracks = {playlist.tracks}
+          />
+        ))}
+      </div>
+    }
+    </>
   )
 };
 
