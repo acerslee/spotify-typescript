@@ -5,6 +5,7 @@ import MusicPlayer from './MusicPlayer';
 import Lyrics from './Lyrics';
 import Profile from './Profile';
 import Sidebar from './Sidebar';
+import Playlists from './Playlists';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 import styled from 'styled-components';
@@ -15,10 +16,15 @@ interface Props {
 
 const HomepageContainer = styled.div`
   margin: 0 auto 0 auto;
-  width: 80%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+`;
+
+const MainContentContainer = styled.div`
+  width: 80%;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
 `;
 
 const SearchAndProfileContainer = styled.div`
@@ -55,6 +61,7 @@ const Homepage: React.FC<Props> = ({code}) => {
   /* states to track which sidebar items is clicked */
   const [showList, setShowList] = useState<boolean>(true);
   const [showLyrics, setShowLyrics] = useState<boolean>(false);
+  const [showPlaylists, setShowPlaylists] = useState<boolean>(false);
 
   const useAuth = (code: string) => {
 
@@ -144,18 +151,25 @@ const Homepage: React.FC<Props> = ({code}) => {
   };
 
   const renderSidebarItem = (item: string) => {
-    /*param will be used later when i add more stuff */
     if (item === 'Songs') {
       setShowList(true);
       setShowLyrics(false);
-    } else {
+      setShowPlaylists(false);
+    } else if (item === 'Lyrics'){
       setShowList(false);
       setShowLyrics(true);
+      setShowPlaylists(false);
+    } else {
+      setShowList(false);
+      setShowLyrics(false);
+      setShowPlaylists(true);
     }
   };
 
   return(
     <HomepageContainer>
+      <Sidebar renderSidebarItem = {renderSidebarItem} />
+      <MainContentContainer>
       <SearchAndProfileContainer>
         <SearchBar changeSearchState = {changeSearchState}/>
         <Profile userInfo = {userInfo} />
@@ -172,11 +186,15 @@ const Homepage: React.FC<Props> = ({code}) => {
           title = {songTitle}
         />
       }
-      <Sidebar renderSidebarItem = {renderSidebarItem} />
-      <MusicPlayer
+      {showPlaylists &&
+        <Playlists />
+      }
+        <MusicPlayer
         token = {token}
         songUri = {songUri}
       />
+    </MainContentContainer>
+
     </HomepageContainer>
   )
 };

@@ -27,8 +27,11 @@ const ProfilePicture = styled.img`
 `;
 
 const Username = styled(Button)`
-  color: white;
-  font-family: Arial;
+  &&&{
+    color: white;
+    font-family: Arial;
+    text-transform: none;
+  }
 `;
 
 const ProfileStatus = styled.p`
@@ -36,6 +39,7 @@ const ProfileStatus = styled.p`
   font-size: 0.8em;
   color: gold;
   letter-spacing: 2px;
+  text-transform: uppercase;
 `;
 
 const Profile: React.FC<Props> = ({ userInfo }) => {
@@ -53,7 +57,7 @@ const Profile: React.FC<Props> = ({ userInfo }) => {
     <>
     {userInfo.email !== '' &&
       <ProfileContainer>
-        <ProfileStatus>{userInfo.product.toUpperCase()}</ProfileStatus>
+        <ProfileStatus>{userInfo.product}</ProfileStatus>
         <ProfilePicture src = {userInfo.image} alt = 'profile-pic' />
         <Username
           aria-controls = 'simple-menu'

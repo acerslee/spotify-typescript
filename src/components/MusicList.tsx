@@ -22,7 +22,7 @@ const columns: Column[] = [
   { id: 'title', label: 'Title', minWidth: 100 },
   { id: 'artist', label: 'Artist', maxWidth: 100},
   { id: 'album', label: 'Album', maxWidth: 200},
-  { id: 'duration', label: 'Duration'}
+  { id: 'duration', label: 'Duration', align: 'right'}
 ];
 
 interface Props {
@@ -111,10 +111,11 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
                   className = {classes.cell}
                   style = {{
                       minWidth: column.minWidth,
-                      borderBottom: 'solid 1px'
+                      borderBottom: 'solid 1px',
+                      textTransform: 'uppercase'
                     }}
                 >
-                  {column.label.toUpperCase()}
+                  {column.label}
                 </TableCell>
               ))}
             </TableRow>
