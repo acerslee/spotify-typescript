@@ -24,7 +24,7 @@ app.post('/login', (req, res) => {
   })
 
   //object to store all returned data from the api calls below
-  let userJSON = {};
+  const userJSON = {};
 
   spotifyApi.authorizationCodeGrant(code)
     .then(data => {
@@ -37,6 +37,7 @@ app.post('/login', (req, res) => {
       return spotifyApi.getMe();
     })
     .then(data => {
+      userJSON['userId'] = data.body['id'];
       userJSON['name'] = data.body['display_name'];
       userJSON['email'] = data.body['email'];
 
@@ -83,6 +84,26 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
     res.status(500).send(err);
   }
 })
+
+// app.get('/playlists/:userid', (req, res) => {
+//   const {userid} = req.params;
+
+//   const spotifyApi = new SpotifyWebApi({
+//     clientId: process.env.REACT_APP_CLIENT_ID,
+//     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
+//     redirectUri: process.env.REACT_APP_REDIRECT_URI
+//   });
+
+//   spotifyApi.getUserPlaylists(userid)
+//     .then(data => {
+//       console.log(data.body)
+//     })
+//     .catch(err => {
+//       console.log(err)
+//       res.status(500).send(err)
+//     })
+// });
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)

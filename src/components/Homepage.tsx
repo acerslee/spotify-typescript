@@ -21,10 +21,7 @@ const HomepageContainer = styled.div`
 `;
 
 const MainContentContainer = styled.div`
-  width: 80%;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
+  width: 83%;
 `;
 
 const SearchAndProfileContainer = styled.div`
@@ -35,9 +32,10 @@ const SearchAndProfileContainer = styled.div`
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID
-})
+});
 
 export interface UserInfo{
+  userId: string,
   username: string,
   email: string,
   image: string,
@@ -52,6 +50,7 @@ const Homepage: React.FC<Props> = ({code}) => {
   const [songArtist, setSongArtist] = useState<string>('');
   const [songTitle, setSongTitle] = useState<string>('');
   const [userInfo, setUserInfo] = useState<UserInfo>({
+    userId: '',
     username: '',
     email: '',
     image: '',
@@ -62,13 +61,11 @@ const Homepage: React.FC<Props> = ({code}) => {
   const [showList, setShowList] = useState<boolean>(true);
   const [showLyrics, setShowLyrics] = useState<boolean>(false);
   const [showPlaylists, setShowPlaylists] = useState<boolean>(false);
+  const [accessToken, setAccessToken] = useState<string>('');
+  const [refreshToken, setRefreshToken] = useState<string>('');
+  const [expiresIn, setExpiresIn] = useState<number>(0);
 
   const useAuth = (code: string) => {
-
-    const [accessToken, setAccessToken] = useState<string>('');
-    const [refreshToken, setRefreshToken] = useState<string>('');
-    const [expiresIn, setExpiresIn] = useState<number>(0);
-
     useEffect(() => {
       axios.post('http://localhost:4000/login', {
         code
@@ -79,6 +76,7 @@ const Homepage: React.FC<Props> = ({code}) => {
           setExpiresIn(res.data.expiresIn);
           setUserInfo(prevUserInfo => ({
             ...prevUserInfo,
+            userId: res.data.userId,
             username: res.data.name,
             email: res.data.email,
             image: res.data.image,
@@ -115,11 +113,13 @@ const Homepage: React.FC<Props> = ({code}) => {
 
   const token = useAuth(code);
 
+  //sets the access token
   useEffect(() => {
     if(!(token as any)) return
     spotifyApi.setAccessToken(token as any);
   }, [token])
 
+  //sets the search results list
   useEffect(() => {
     if(!searchTerm) return setSearchResults([]);
     if(!(token as any)) return;
@@ -129,7 +129,6 @@ const Homepage: React.FC<Props> = ({code}) => {
     spotifyApi.searchTracks(searchTerm)
       .then(res => {
         if (cancel) return
-        console.log(res)
         setSearchResults(res?.body?.tracks?.items)
       })
       .catch(err => console.error(err))
@@ -170,31 +169,30 @@ const Homepage: React.FC<Props> = ({code}) => {
     <HomepageContainer>
       <Sidebar renderSidebarItem = {renderSidebarItem} />
       <MainContentContainer>
-      <SearchAndProfileContainer>
-        <SearchBar changeSearchState = {changeSearchState}/>
-        <Profile userInfo = {userInfo} />
-      </SearchAndProfileContainer>
-      {showList &&
-        <MusicList
-          searchResults = {searchResults}
-          retrieveSongData = {retrieveSongData}
-        />
-      }
-      {showLyrics &&
-        <Lyrics
-          artist = {songArtist}
-          title = {songTitle}
-        />
-      }
-      {showPlaylists &&
-        <Playlists />
-      }
+        <SearchAndProfileContainer>
+          <SearchBar changeSearchState = {changeSearchState}/>
+          <Profile userInfo = {userInfo} />
+        </SearchAndProfileContainer>
+        {showList &&
+          <MusicList
+            searchResults = {searchResults}
+            retrieveSongData = {retrieveSongData}
+          />
+        }
+        {showLyrics &&
+          <Lyrics
+            artist = {songArtist}
+            title = {songTitle}
+          />
+        }
+        {showPlaylists &&
+          <Playlists userInfo = {userInfo} accessToken = {accessToken}/>
+        }
         <MusicPlayer
-        token = {token}
-        songUri = {songUri}
-      />
-    </MainContentContainer>
-
+          token = {token}
+          songUri = {songUri}
+        />
+      </MainContentContainer>
     </HomepageContainer>
   )
 };
