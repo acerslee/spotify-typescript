@@ -18,10 +18,20 @@ const HomepageContainer = styled.div`
   margin: 0 auto 0 auto;
   display: flex;
   flex-direction: row;
+
+  // display: grid;
+  // grid-template-areas: 1fr auto;
+  // grid-template-rows: 1fr auto;
+  // grid-template-areas:
+  //   "sidebar main"
+  //   "player player";
+  // height: 100vh;
+  // width: 100vw;
 `;
 
 const MainContentContainer = styled.div`
   width: 83%;
+  // grid-area: main;
 `;
 
 const SearchAndProfileContainer = styled.div`
@@ -61,6 +71,8 @@ const Homepage: React.FC<Props> = ({code}) => {
   const [showList, setShowList] = useState<boolean>(true);
   const [showLyrics, setShowLyrics] = useState<boolean>(false);
   const [showPlaylists, setShowPlaylists] = useState<boolean>(false);
+
+  /*authentication states */
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');
   const [expiresIn, setExpiresIn] = useState<number>(0);

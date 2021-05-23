@@ -26,7 +26,7 @@ const MenuItem = styled.div`
   text-align: center;
   &:hover {
     cursor: pointer;
-    color: orange;
+    color: rgb(28, 185, 84);
   }
 `;
 

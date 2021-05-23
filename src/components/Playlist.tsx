@@ -1,16 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface Props {
   name: string,
-  image: [],
-  tracks: number
+  image: {url: string}[],
+  tracks: {total: number}
 }
 
-const Playlist: React.FC<Props> = ({name, image, tracks}) => {
+const PlaylistItem = styled.div`
+  font-family: Arial;
+  margin-bottom: 1em;
+`;
+
+const Playlist: React.FC<Props> = ({ name, image, tracks }) => {
   return(
-    <div>
-      hello
-    </div>
+    <PlaylistItem>
+      <img src = {image[1].url} alt = 'playlist-cover'/>
+      <p>{name}</p>
+      <p>{tracks.total} Tracks</p>
+    </PlaylistItem>
   )
 };
 

@@ -9,7 +9,7 @@ interface Props{
 
 const MusicPlayerContainer = styled.div`
   position: fixed;
-  width: 80%;
+  width: 83%;
   bottom: 0%;
 `;
 
