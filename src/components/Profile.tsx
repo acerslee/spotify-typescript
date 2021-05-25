@@ -51,7 +51,11 @@ const Profile: React.FC<Props> = ({ userInfo }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  }
+  };
+
+  const handleLogout = () => {
+    (window as any).location = '/'
+  };
 
   return(
     <>
@@ -74,7 +78,7 @@ const Profile: React.FC<Props> = ({ userInfo }) => {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </ProfileContainer>
     }

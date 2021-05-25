@@ -41,7 +41,7 @@ const renderSidebarIcons = (item: string) => {
 
 const Sidebar: React.FC<Props> = ({renderSidebarItem}) => (
   <SidebarContainer>
-    {SidebarItems.map((item, index) => (
+    {SidebarItems.map((item: string, index: number) => (
       <MenuItem
         key = {index}
         onClick = {() => renderSidebarItem(item)}

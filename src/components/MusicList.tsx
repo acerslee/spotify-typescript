@@ -69,6 +69,8 @@ const useStyles = makeStyles({
 
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
 
+  console.log('searched', searchResults)
+
   const classes = useStyles();
 
   const dropdownSongData = (uri: string, artist: string, title: string) => {
@@ -121,24 +123,28 @@ const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {searchResults.map((song: any, index: number) => {
-              return(
-                <TableRow
-                  key = {index}
-                  className = {classes.row}
-                  onClick = {() => dropdownSongData(song.uri, song.name,song.artists[0].name)}
-                >
-                  <TableCell className = {classes.cell}>{index + 1}</TableCell>
-                  <TableCell className = {classes.cellFlexBox}>
-                    <AlbumImage src = {renderSmallestImage(song.album.images)} alt = 'album placeholder'/>
-                    {song.name}
-                  </TableCell>
-                  <TableCell className = {classes.cell}>{song.artists[0].name}</TableCell>
-                  <TableCell className = {classes.cell}>{song.album.name}</TableCell>
-                  <TableCell className = {classes.cell}>{convertTime(song.duration_ms)}</TableCell>
-                </TableRow>
-              )
-            })}
+            {searchResults.map((song: any, index: number) => (
+              <TableRow
+                key = {index}
+                className = {classes.row}
+                onClick = {() => dropdownSongData(song.uri, song.name,song.artists[0].name)}
+              >
+                <TableCell className = {classes.cell}>{index + 1}</TableCell>
+                <TableCell className = {classes.cellFlexBox}>
+                  <AlbumImage src = {renderSmallestImage(song.album.images)} alt = 'album placeholder'/>
+                  {song.name}
+                </TableCell>
+                <TableCell className = {classes.cell}>
+                  {song.artists.map((artist: {name: string}, index: number) => (
+                      index !== song.artists.length - 1
+                      ? artist.name + ', '
+                      : artist.name
+                  ))}
+                </TableCell>
+                <TableCell className = {classes.cell}>{song.album.name}</TableCell>
+                <TableCell className = {classes.cell}>{convertTime(song.duration_ms)}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
