@@ -69,8 +69,6 @@ const useStyles = makeStyles({
 
 const MusicList: React.FC<Props> = ({ searchResults, retrieveSongData}) => {
 
-  console.log('searched', searchResults)
-
   const classes = useStyles();
 
   const dropdownSongData = (uri: string, artist: string, title: string) => {

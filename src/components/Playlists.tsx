@@ -16,9 +16,15 @@ interface Props{
 const PlaylistContainer = styled.div`
   color: white;
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto;
   overflow: scroll;
   height: 83vh;
+  @media(max-width: 1500px){
+    grid-template-columns: auto auto auto;
+  }
+  @media(max-width: 1150px){
+    grid-template-columns: auto auto;
+  }
 `;
 
 const PlaylistHeader = styled.h1`

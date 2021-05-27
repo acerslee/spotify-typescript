@@ -10,7 +10,8 @@ type UserInfo = {
 }
 
 interface Props{
-  userInfo: UserInfo
+  userInfo: UserInfo,
+  renderProfilePage: Function
 }
 
 const ProfileContainer = styled.div`
@@ -42,7 +43,7 @@ const ProfileStatus = styled.p`
   text-transform: uppercase;
 `;
 
-const Profile: React.FC<Props> = ({ userInfo }) => {
+const Profile: React.FC<Props> = ({ userInfo, renderProfilePage }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,7 +78,7 @@ const Profile: React.FC<Props> = ({ userInfo }) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={() => {renderProfilePage()}}>Profile</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </ProfileContainer>

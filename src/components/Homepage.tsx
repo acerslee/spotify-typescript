@@ -6,6 +6,7 @@ import Lyrics from './Lyrics';
 import Profile from './Profile';
 import Sidebar from './Sidebar';
 import Playlists from './Playlists';
+import Profilepage from './Profilepage';
 import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-node';
 import styled from 'styled-components';
@@ -67,10 +68,11 @@ const Homepage: React.FC<Props> = ({code}) => {
     product: ''
   });
 
-  /* states to track which sidebar items is clicked */
+  /* states to track which item is to be rendered */
   const [showList, setShowList] = useState<boolean>(true);
   const [showLyrics, setShowLyrics] = useState<boolean>(false);
   const [showPlaylists, setShowPlaylists] = useState<boolean>(false);
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   /*authentication states */
   const [accessToken, setAccessToken] = useState<string>('');
@@ -164,17 +166,27 @@ const Homepage: React.FC<Props> = ({code}) => {
   const renderSidebarItem = (item: string) => {
     if (item === 'Songs') {
       setShowList(true);
+      setShowProfile(false);
       setShowLyrics(false);
       setShowPlaylists(false);
     } else if (item === 'Lyrics'){
       setShowList(false);
+      setShowProfile(false);
       setShowLyrics(true);
       setShowPlaylists(false);
     } else {
       setShowList(false);
+      setShowProfile(false);
       setShowLyrics(false);
       setShowPlaylists(true);
     }
+  };
+
+  const renderProfilePage = () => {
+    setShowProfile(true);
+    setShowList(false);
+    setShowLyrics(false);
+    setShowPlaylists(false);
   };
 
   return(
@@ -183,7 +195,10 @@ const Homepage: React.FC<Props> = ({code}) => {
       <MainContentContainer>
         <SearchAndProfileContainer>
           <SearchBar changeSearchState = {changeSearchState}/>
-          <Profile userInfo = {userInfo} />
+          <Profile
+            userInfo = {userInfo}
+            renderProfilePage = {renderProfilePage}
+          />
         </SearchAndProfileContainer>
         {showList &&
           <MusicList
@@ -202,6 +217,9 @@ const Homepage: React.FC<Props> = ({code}) => {
             userInfo = {userInfo}
             accessToken = {accessToken}
           />
+        }
+        {showProfile &&
+          <Profilepage userInfo = {userInfo} />
         }
         <MusicPlayer
           token = {token}
