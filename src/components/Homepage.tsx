@@ -219,7 +219,10 @@ const Homepage: React.FC<Props> = ({code}) => {
           />
         }
         {showProfile &&
-          <Profilepage userInfo = {userInfo} />
+          <Profilepage
+            userInfo = {userInfo}
+            accessToken = {accessToken}
+          />
         }
         <MusicPlayer
           token = {token}

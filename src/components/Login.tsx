@@ -4,8 +4,22 @@ import logo from '../images/spotify-logo.png';
 import styled from 'styled-components';
 
 //returns 20 of declared information
+
+const scopes = [
+  'streaming',
+  'user-read-recently-played',
+  'user-read-playback-state',
+  'user-top-read',
+  'user-modify-playback-state',
+  'user-follow-read',
+  'user-library-read',
+  'user-library-modify',
+  'user-read-email',
+  'user-read-private'
+];
+
 const AUTH_URL =
-  `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`
+  `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=${scopes.join('%20')}`
 
 const LoginContainer = styled.div`
   display: flex;
