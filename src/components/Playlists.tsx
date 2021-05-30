@@ -28,7 +28,6 @@ const PlaylistContainer = styled.div`
 `;
 
 const PlaylistHeader = styled.h1`
-  font-family: Arial;
   color: white;
   margin: 0.5em 0;
 `;

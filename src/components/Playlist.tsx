@@ -8,7 +8,6 @@ interface Props {
 }
 
 const PlaylistItem = styled.div`
-  font-family: Arial;
   margin-bottom: 1em;
 `;
 

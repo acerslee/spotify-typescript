@@ -38,7 +38,6 @@ const AlbumImage = styled.img`
 
 const ListHeading = styled.h1`
   color: white;
-  font-family: Arial;
   margin: 0.5rem 0.5rem;
 `;
 
@@ -47,7 +46,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    height: '80vh'
+    height: '85vh'
   },
   row: {
     '&:hover':{

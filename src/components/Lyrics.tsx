@@ -14,7 +14,6 @@ const LyricsText = styled.p`
   margin-top: 0.5rem;
   text-align: center;
   font-size: 1.3rem;
-  font-family: Arial;
 `;
 
 interface Props{

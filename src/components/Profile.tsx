@@ -30,7 +30,6 @@ const ProfilePicture = styled.img`
 const Username = styled(Button)`
   &&&{
     color: white;
-    font-family: Arial;
     text-transform: none;
   }
 `;

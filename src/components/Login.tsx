@@ -37,14 +37,20 @@ const MiniContainer = styled.div`
   height: 55vh;
   width: 30%;
   border-radius: 40px;
-  background-color: #3d3d3d;
+  background-color: #282828;
+  @media(max-width: 900px) {
+    width: 85%;
+    height: 45vh;
+  }
 `;
 
 const LoginText = styled.p`
   color: white;
   text-align: center;
   font-size: 3rem;
-  font-family: Arial;
+  @media(max-width: 900px) {
+    font-size: 1.5rem;
+  }
 `
 
 //&&& makes styled component styling an absolute priority
@@ -55,7 +61,7 @@ const LoginButton = styled(Button)`
     border-radius: 7%;
     margin-top: 1vh;
     &: hover {
-      background-color: #43E2CC;
+      background-color: #18d860;
     }
   }
 `;
@@ -70,7 +76,7 @@ const Login: React.FC = () => {
           alt = 'logo'
           style = {{height: '8rem', width: '8rem'}}
         />
-        <LoginText>Explore your music here</LoginText>
+        <LoginText>Explore Your Music Here!</LoginText>
         <LoginButton variant = 'contained'>
           <a
             href = {AUTH_URL}
