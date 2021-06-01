@@ -81,7 +81,7 @@ const Homepage: React.FC<Props> = ({code}) => {
 
   const useAuth = (code: string) => {
     useEffect(() => {
-      axios.post('http://localhost:4000/login', {
+      axios.post('http://localhost:4000/auth', {
         code
       })
         .then(res => {
@@ -98,8 +98,9 @@ const Homepage: React.FC<Props> = ({code}) => {
           }));
           (window as any).history.pushState({}, null, '/home');
         })
-        .catch(() => {
-          (window as any).location = '/'
+        .catch((err) => {
+          // (window as any).location = '/'
+          console.error(err)
         })
     },[code])
 
@@ -120,7 +121,7 @@ const Homepage: React.FC<Props> = ({code}) => {
       }, (expiresIn - 60) * 1000)
 
       return () => clearInterval(intervalCall);
-    },[refreshToken])
+    },[])
 
     return accessToken;
   };

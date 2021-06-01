@@ -4,7 +4,7 @@ import Homepage from './components/Homepage';
 
 const code = new URLSearchParams(window.location.search).get('code');
 
-const App: React.FC = () => {
+const App  = () => {
 
   return (
     code ? <Homepage code = {code} /> : <Login />

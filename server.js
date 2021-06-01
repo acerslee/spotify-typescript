@@ -8,19 +8,45 @@ require('dotenv').config();
 
 const app = express();
 
-const port = 4000;
+let REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI || 'http://localhost:3000';
+let FRONTEND_URI = process.env.REACT_APP_FRONTEND_URI || 'http://localhost:3000';
+const PORT = process.env.PORT || 4000;
+
+if (process.env.NODE_ENV !== 'production') {
+  REDIRECT_URI = 'http://localhost:3000';
+  FRONTEND_URI = 'http://localhost:3000';
+}
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.post('/login', (req, res) => {
+app.get('/login', (req, res) => {
+  const scopes = [
+    'streaming',
+    'user-read-recently-played',
+    'user-read-playback-state',
+    'user-top-read',
+    'user-modify-playback-state',
+    'user-follow-read',
+    'user-library-read',
+    'user-library-modify',
+    'user-read-email',
+    'user-read-private'
+  ];
+
+  res.redirect(
+    `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=${scopes.join('%20')}`
+  )
+})
+
+app.post('/auth', (req, res) => {
   const code = req.body.code;
 
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.REACT_APP_CLIENT_ID,
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-    redirectUri: process.env.REACT_APP_REDIRECT_URI
+    redirectUri: REDIRECT_URI
   })
 
   //object to store all returned data from the api calls below
@@ -58,7 +84,7 @@ app.post('/refresh', (req, res) => {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.REACT_APP_CLIENT_ID,
     clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-    redirectUri: process.env.REACT_APP_REDIRECT_URI,
+    redirectUri: REDIRECT_URI,
     refreshToken
   })
 
@@ -85,6 +111,6 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
   }
 })
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`)
 })

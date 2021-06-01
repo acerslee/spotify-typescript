@@ -38,15 +38,17 @@ const Profilepage: React.FC<Props> = ({userInfo,  accessToken }) => {
 
     spotifyApi.setAccessToken(accessToken)
 
-    //**figure out the client scope issue here**
     spotifyApi.getFollowedArtists()
       .then(artists => {
-        console.log(artists.body.artists.items)
         setFollowedArtists(artists.body.artists.items);
       })
       .catch(err => console.error(err))
   },[userInfo, accessToken])
 
+  let visibleSlideCount = 6;
+  if(window.screen.width < 1200) visibleSlideCount = 5;
+  if(window.screen.width < 1000) visibleSlideCount = 4;
+  if(window.screen.width < 700) visibleSlideCount = 2;
 
   return(
     <ProfilePageContainer>
@@ -61,21 +63,30 @@ const Profilepage: React.FC<Props> = ({userInfo,  accessToken }) => {
           }}
         />
         <h1>{userInfo.username}</h1>
+        <p>{followedArtists.length} Artists Following</p>
       </ProfileContainer>
       <h1>Artists You Follow</h1>
         <CarouselProvider
           naturalSlideHeight = {150}
           naturalSlideWidth = {125}
           totalSlides = {followedArtists.length}
-          visibleSlides = {6}
+          visibleSlides = {visibleSlideCount}
         >
           <Slider>
             {followedArtists.map((artist: any) => {
               return(
                 <Slide key = {artist.id} index = {0} style = {{listStyle: 'none'}}>
-                  <img src = {artist.images[2].url} alt = 'followed-artist' />
+                  <img
+                    src = {artist.images[2].url}
+                    alt = 'followed-artist'
+                    style = {{
+                      borderRadius: '20em',
+                      height: '12em',
+                      width: '12em'
+                    }}
+                  />
                   <p>{artist.name}</p>
-                  <p>{artist.followers.total} FOLLOWERS</p>
+                  <p>{artist.followers.total} Followers</p>
                 </Slide>
               )
             })}
