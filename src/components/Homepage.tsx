@@ -79,9 +79,15 @@ const Homepage: React.FC<Props> = ({code}) => {
   const [refreshToken, setRefreshToken] = useState<string>('');
   const [expiresIn, setExpiresIn] = useState<number>(0);
 
+
+  const url =
+    process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:4000'
+    : 'https://spotify-typescript.herokuapp.com'
+
   const useAuth = (code: string) => {
     useEffect(() => {
-      axios.post('http://localhost:4000/auth', {
+      axios.post(`${url}/auth`, {
         code
       })
         .then(res => {
@@ -108,7 +114,7 @@ const Homepage: React.FC<Props> = ({code}) => {
       if (!refreshToken || !expiresIn) return;
 
       const intervalCall = setInterval(() => {
-        axios.post('http://localhost:4000/refresh', {
+        axios.post(`${url}/refresh`, {
           refreshToken
         })
           .then(res => {

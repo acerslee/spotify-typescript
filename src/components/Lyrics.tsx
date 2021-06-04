@@ -25,10 +25,16 @@ const Lyrics: React.FC<Props> = ({ artist, title }) => {
   const [lyrics, setLyrics] = useState<string>('');
 
   useEffect(() => {
+    const url =
+      process.env.NODE_ENV !== 'production'
+      ? 'http://localhost:4000'
+      : 'https://spotify-typescript.herokuapp.com'
+
     if (artist === '' || title === '') return;
-    axios.get(`http://localhost:4000/lyrics/${artist}/${title}`)
+    axios.get(`${url}/lyrics/${artist}/${title}`)
       .then(res => setLyrics(res.data))
       .catch(err => console.error(err))
+
   },[artist, title]);
 
   return(

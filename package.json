@@ -2,6 +2,10 @@
   "name": "spotify-api",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "7.14.0",
+    "node": "14.15.3"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.12.0",

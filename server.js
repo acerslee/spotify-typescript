@@ -1,22 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const SpotifyWebApi = require('spotify-web-api-node');
 const cors = require('cors');
 const lyricsFinder = require('lyrics-finder');
 
-require('dotenv').config();
-
 const app = express();
 
 let REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI || 'http://localhost:3000';
-let FRONTEND_URI = process.env.REACT_APP_FRONTEND_URI || 'http://localhost:3000';
+// let FRONTEND_URI = process.env.REACT_APP_FRONTEND_URI || 'http://localhost:3000';
 const PORT = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
   REDIRECT_URI = 'http://localhost:3000';
-  FRONTEND_URI = 'http://localhost:3000';
+  // FRONTEND_URI = 'http://localhost:3000';
 }
 
+app.use(express.static(path.resolve(__dirname, '../build')));
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
@@ -74,6 +75,7 @@ app.post('/auth', (req, res) => {
       res.status(201).send(userJSON);
     })
     .catch(err => {
+      console.log(err)
       res.status(500).send(err);
     })
 })
@@ -97,6 +99,7 @@ app.post('/refresh', (req, res) => {
       })
     })
     .catch(err => {
+      console.log(err)
       res.status(500).send(err)
     })
 })
