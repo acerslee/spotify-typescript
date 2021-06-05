@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Playlist from './Playlist';
 import styled from 'styled-components';
-import SpotifyWebApi from 'spotify-web-api-node';
+const SpotifyWebApi = require('spotify-web-api-node');
 
 type UserInfo = {
   userId: string,
