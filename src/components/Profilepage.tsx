@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SpotifyWebApi from 'spotify-web-api-node';
+const SpotifyWebApi = require('spotify-web-api-node');
 import styled from 'styled-components';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
