@@ -8,7 +8,7 @@ import Sidebar from './Sidebar';
 import Playlists from './Playlists';
 import Profilepage from './Profilepage';
 import axios from 'axios';
-import SpotifyWebApi from 'spotify-web-api-node';
+const SpotifyWebApi = require('spotify-web-api-node');
 import styled from 'styled-components';
 
 interface Props {
