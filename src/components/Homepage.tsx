@@ -53,6 +53,11 @@ export interface UserInfo{
   product: string
 }
 
+const url =
+  process.env.NODE_ENV !== 'production'
+  ? 'http://localhost:4000'
+  : 'https://spotify-typescript.herokuapp.com'
+
 const Homepage: React.FC<Props> = ({code}) => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -78,12 +83,6 @@ const Homepage: React.FC<Props> = ({code}) => {
   const [accessToken, setAccessToken] = useState<string>('');
   const [refreshToken, setRefreshToken] = useState<string>('');
   const [expiresIn, setExpiresIn] = useState<number>(0);
-
-
-  const url =
-    process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:4000'
-    : 'https://spotify-typescript.herokuapp.com'
 
   const useAuth = (code: string) => {
     useEffect(() => {
@@ -143,21 +142,23 @@ const Homepage: React.FC<Props> = ({code}) => {
   //sets the search results list
   useEffect(() => {
     if(!searchTerm) return setSearchResults([]);
-    if(!(token as any)) return;
+    if(!(accessToken as any)) return;
 
     let cancel = false;
 
-    spotifyApi.searchTracks(searchTerm)
-      .then(res => {
-        if (cancel) return
-        setSearchResults(res?.body?.tracks?.items)
-      })
-      .catch(err => console.error(err))
+    let tracksReqBody = {accessToken, searchTerm}
+
+    axios.post(`${url}/tracks`, tracksReqBody)
+    .then(res => {
+      if (cancel) return
+      setSearchResults(res?.data?.body?.tracks?.items)
+    })
+    .catch(err => console.error(err))
 
     return () => {
       (cancel = true)
     };
-  }, [searchTerm, token])
+  }, [searchTerm, accessToken])
 
   /*helper state-data functions to be passed down to child components*/
   const retrieveSongData = (uri: string, artist: string, title: string) => {

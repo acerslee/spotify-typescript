@@ -22,7 +22,7 @@ interface Props{
 }
 
 const Lyrics: React.FC<Props> = ({ artist, title }) => {
-  const [lyrics, setLyrics] = useState<string>('');
+  const [lyrics, setLyrics] = useState<string>('No Lyrics Found');
 
   useEffect(() => {
     const url =

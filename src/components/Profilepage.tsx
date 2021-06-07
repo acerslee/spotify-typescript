@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import SpotifyWebApi from 'spotify-web-api-node';
 import styled from 'styled-components';
 import { CarouselProvider, Slider, Slide } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
+import axios from 'axios';
 
 type UserInfo = {
   username: string,
@@ -25,24 +25,22 @@ const ProfileContainer = styled.div`
   flex-direction: row;
 `;
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID
-});
-
 const Profilepage: React.FC<Props> = ({userInfo,  accessToken }) => {
-
   const [followedArtists, setFollowedArtists] = useState<any>([]);
 
   useEffect(() => {
     if(!userInfo) return;
 
-    spotifyApi.setAccessToken(accessToken)
+    const url =
+    process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:4000'
+    : 'https://spotify-typescript.herokuapp.com'
 
-    spotifyApi.getFollowedArtists()
-      .then(artists => {
-        setFollowedArtists(artists.body.artists.items);
-      })
-      .catch(err => console.error(err))
+    axios.post(`${url}/profile-artists`, {accessToken})
+    .then(res => {
+      setFollowedArtists(res.data.body.artists.items)
+    })
+    .catch(err => console.error(err))
   },[userInfo, accessToken])
 
   let visibleSlideCount = 6;

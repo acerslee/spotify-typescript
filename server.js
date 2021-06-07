@@ -114,6 +114,53 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
   }
 })
 
+app.post('/tracks', async (req, res) => {
+  try{
+    const {accessToken} = req.body
+    const spotifyApi = new SpotifyWebApi({
+      clientId: process.env.REACT_APP_CLIENT_ID
+    })
+    spotifyApi.setAccessToken(accessToken)
+
+    const getTracks = await spotifyApi.searchTracks(req.body.searchTerm)
+    res.status(201).send(getTracks)
+  }
+  catch(err) {
+    res.status(500).send(err)
+  }
+})
+
+app.post('/playlist', async (req, res) => {
+  try{
+    const {accessToken, userId} = req.body
+    const spotifyApi = new SpotifyWebApi({
+      clientId: process.env.REACT_APP_CLIENT_ID
+    })
+    spotifyApi.setAccessToken(accessToken)
+
+    const getPlaylists = await spotifyApi.getUserPlaylists(userId)
+    res.status(201).send(getPlaylists)
+  }
+  catch(err) {
+    res.status(500).send(err)
+  }
+})
+
+app.post('/profile-artists', async (req, res) => {
+  try{
+    const spotifyApi = new SpotifyWebApi({
+      clientId: process.env.REACT_APP_CLIENT_ID
+    })
+    spotifyApi.setAccessToken(req.body.accessToken)
+
+    const getArtists = await spotifyApi.getFollowedArtists()
+    res.status(201).send(getArtists)
+  }
+  catch(err) {
+    res.status(500).send(err)
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
 })

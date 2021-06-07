@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Playlist from './Playlist';
 import styled from 'styled-components';
-import SpotifyWebApi from 'spotify-web-api-node';
+import axios from 'axios';
 
 type UserInfo = {
   userId: string,
@@ -32,23 +32,27 @@ const PlaylistHeader = styled.h1`
   margin: 0.5em 0;
 `;
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID
-});
-
 const Playlists: React.FC<Props> = ({ userInfo, accessToken }) => {
   const [userPlaylists, setUserPlaylists] = useState<any>([])
 
   useEffect(() => {
     if(!userInfo) return setUserPlaylists([]);
 
-    spotifyApi.setAccessToken(accessToken)
+    const url =
+    process.env.NODE_ENV !== 'production'
+    ? 'http://localhost:4000'
+    : 'https://spotify-typescript.herokuapp.com'
 
-    spotifyApi.getUserPlaylists(userInfo.userId)
-      .then(res => {
-        setUserPlaylists(res.body.items)
-      })
-      .catch(err => console.error(err))
+    let userId = userInfo.userId;
+    let playlistReqBody = {accessToken, userId}
+
+    axios.post(`${url}/playlist`,
+      playlistReqBody
+    )
+    .then(res => {
+      setUserPlaylists(res.data.body.items)
+    })
+    .catch(err => console.error(err))
   },[userInfo, accessToken])
 
   return(
