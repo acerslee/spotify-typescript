@@ -75,7 +75,6 @@ app.post('/auth', (req, res) => {
       res.status(201).send(userJSON);
     })
     .catch(err => {
-      console.log(err)
       res.status(500).send(err);
     })
 })
@@ -116,11 +115,10 @@ app.get('/lyrics/:artist/:title', async (req, res) => {
 
 app.post('/tracks', async (req, res) => {
   try{
-    const {accessToken} = req.body
     const spotifyApi = new SpotifyWebApi({
       clientId: process.env.REACT_APP_CLIENT_ID
     })
-    spotifyApi.setAccessToken(accessToken)
+    spotifyApi.setAccessToken(req.body.token)
 
     const getTracks = await spotifyApi.searchTracks(req.body.searchTerm)
     res.status(201).send(getTracks)

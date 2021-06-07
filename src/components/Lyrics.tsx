@@ -19,23 +19,19 @@ const LyricsText = styled.p`
 interface Props{
   artist: string
   title: string,
+  url: string
 }
 
-const Lyrics: React.FC<Props> = ({ artist, title }) => {
+const Lyrics: React.FC<Props> = ({ artist, title, url }) => {
   const [lyrics, setLyrics] = useState<string>('No Lyrics Found');
 
   useEffect(() => {
-    const url =
-      process.env.NODE_ENV !== 'production'
-      ? 'http://localhost:4000'
-      : 'https://spotify-typescript.herokuapp.com'
-
     if (artist === '' || title === '') return;
     axios.get(`${url}/lyrics/${artist}/${title}`)
       .then(res => setLyrics(res.data))
       .catch(err => console.error(err))
 
-  },[artist, title]);
+  },[artist, title, url]);
 
   return(
     <LyricsContainer>

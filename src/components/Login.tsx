@@ -47,12 +47,11 @@ const LoginButton = styled(Button)`
   }
 `;
 
-const AUTH_URL =
-  process.env.NODE_ENV !== 'production'
-  ? 'http://localhost:4000/login'
-  : 'https://spotify-typescript.herokuapp.com/login'
+interface Props {
+  url: string
+}
 
-const Login  = () => {
+const Login: React.FC<Props> = ({url}) => {
 
   return(
     <LoginContainer>
@@ -65,7 +64,7 @@ const Login  = () => {
         <LoginText>Explore Your Music Here!</LoginText>
         <LoginButton variant = 'contained'>
           <a
-            href = {AUTH_URL}
+            href = {url + '/login'}
             style = {{color: 'white', textDecoration: 'none'}}
           >
             Login spotify

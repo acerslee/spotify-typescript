@@ -10,7 +10,8 @@ type UserInfo = {
 
 interface Props{
   userInfo: UserInfo,
-  accessToken: string
+  accessToken: string,
+  url: string
 }
 
 const PlaylistContainer = styled.div`
@@ -32,16 +33,11 @@ const PlaylistHeader = styled.h1`
   margin: 0.5em 0;
 `;
 
-const Playlists: React.FC<Props> = ({ userInfo, accessToken }) => {
+const Playlists: React.FC<Props> = ({ userInfo, accessToken, url }) => {
   const [userPlaylists, setUserPlaylists] = useState<any>([])
 
   useEffect(() => {
     if(!userInfo) return setUserPlaylists([]);
-
-    const url =
-    process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:4000'
-    : 'https://spotify-typescript.herokuapp.com'
 
     let userId = userInfo.userId;
     let playlistReqBody = {accessToken, userId}
@@ -53,7 +49,7 @@ const Playlists: React.FC<Props> = ({ userInfo, accessToken }) => {
       setUserPlaylists(res.data.body.items)
     })
     .catch(err => console.error(err))
-  },[userInfo, accessToken])
+  },[userInfo, accessToken, url])
 
   return(
     <>

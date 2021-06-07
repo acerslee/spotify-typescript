@@ -13,7 +13,8 @@ type UserInfo = {
 
 interface Props{
   userInfo: UserInfo,
-  accessToken: string
+  accessToken: string,
+  url: string
 }
 
 const ProfilePageContainer = styled.div`
@@ -25,23 +26,18 @@ const ProfileContainer = styled.div`
   flex-direction: row;
 `;
 
-const Profilepage: React.FC<Props> = ({userInfo,  accessToken }) => {
+const Profilepage: React.FC<Props> = ({userInfo,  accessToken, url }) => {
   const [followedArtists, setFollowedArtists] = useState<any>([]);
 
   useEffect(() => {
     if(!userInfo) return;
-
-    const url =
-    process.env.NODE_ENV !== 'production'
-    ? 'http://localhost:4000'
-    : 'https://spotify-typescript.herokuapp.com'
 
     axios.post(`${url}/profile-artists`, {accessToken})
     .then(res => {
       setFollowedArtists(res.data.body.artists.items)
     })
     .catch(err => console.error(err))
-  },[userInfo, accessToken])
+  },[userInfo, accessToken, url])
 
   let visibleSlideCount = 6;
   if(window.screen.width < 1200) visibleSlideCount = 5;

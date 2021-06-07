@@ -12,6 +12,7 @@ import styled from 'styled-components';
 
 interface Props {
   code: string
+  url: string
 }
 
 const HomepageContainer = styled.div`
@@ -40,10 +41,6 @@ const SearchAndProfileContainer = styled.div`
   justify-content: space-between;
 `;
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID
-});
-
 export interface UserInfo{
   userId: string,
   username: string,
@@ -52,12 +49,8 @@ export interface UserInfo{
   product: string
 }
 
-const url =
-  process.env.NODE_ENV !== 'production'
-  ? 'http://localhost:4000'
-  : 'https://spotify-typescript.herokuapp.com'
 
-const Homepage: React.FC<Props> = ({code}) => {
+const Homepage: React.FC<Props> = ({code, url}) => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any>([]);
@@ -102,9 +95,8 @@ const Homepage: React.FC<Props> = ({code}) => {
           }));
           (window as any).history.pushState({}, null, '/home');
         })
-        .catch((err) => {
-          // (window as any).location = '/'
-          console.error(err)
+        .catch(() => {
+          (window as any).location = '/'
         })
     },[code])
 
@@ -132,20 +124,14 @@ const Homepage: React.FC<Props> = ({code}) => {
 
   const token = useAuth(code);
 
-  //sets the access token
-  useEffect(() => {
-    if(!(token as any)) return
-    spotifyApi.setAccessToken(token as any);
-  }, [token])
-
   //sets the search results list
   useEffect(() => {
     if(!searchTerm) return setSearchResults([]);
-    if(!(accessToken as any)) return;
+    if(!(token as any)) return;
 
     let cancel = false;
 
-    let tracksReqBody = {accessToken, searchTerm}
+    let tracksReqBody = {token, searchTerm}
 
     axios.post(`${url}/tracks`, tracksReqBody)
     .then(res => {
@@ -157,7 +143,7 @@ const Homepage: React.FC<Props> = ({code}) => {
     return () => {
       (cancel = true)
     };
-  }, [searchTerm, accessToken])
+  }, [searchTerm, token, url])
 
   /*helper state-data functions to be passed down to child components*/
   const retrieveSongData = (uri: string, artist: string, title: string) => {
@@ -217,18 +203,21 @@ const Homepage: React.FC<Props> = ({code}) => {
           <Lyrics
             artist = {songArtist}
             title = {songTitle}
+            url = {url}
           />
         }
         {showPlaylists &&
           <Playlists
             userInfo = {userInfo}
             accessToken = {accessToken}
+            url = {url}
           />
         }
         {showProfile &&
           <Profilepage
             userInfo = {userInfo}
             accessToken = {accessToken}
+            url = {url}
           />
         }
         <MusicPlayer

@@ -22,8 +22,9 @@ const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
   },[songUri])
 
   return(
+    <>
+    {token &&
     <MusicPlayerContainer>
-      {token &&
         <SpotifyPlayer
           token = {token}
           uris = {songUri}
@@ -42,8 +43,9 @@ const MusicPlayer: React.FC<Props> = ({token, songUri}) => {
             sliderColor: '#1cb954'
           }}
         />
+        </MusicPlayerContainer>
       }
-    </MusicPlayerContainer>
+    </>
   )
 }
 
