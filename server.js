@@ -22,24 +22,24 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-app.get('/login', (req, res) => {
-  const scopes = [
-    'streaming',
-    'user-read-recently-played',
-    'user-read-playback-state',
-    'user-top-read',
-    'user-modify-playback-state',
-    'user-follow-read',
-    'user-library-read',
-    'user-library-modify',
-    'user-read-email',
-    'user-read-private'
-  ];
+// app.get('/login', (req, res) => {
+//   const scopes = [
+//     'streaming',
+//     'user-read-recently-played',
+//     'user-read-playback-state',
+//     'user-top-read',
+//     'user-modify-playback-state',
+//     'user-follow-read',
+//     'user-library-read',
+//     'user-library-modify',
+//     'user-read-email',
+//     'user-read-private'
+//   ];
 
-  res.redirect(
-    `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${scopes.join('%20')}`
-  )
-})
+//   res.redirect(
+//     `https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${scopes.join('%20')}`
+//   )
+// })
 
 app.post('/auth', (req, res) => {
   const code = req.body.code;

@@ -47,11 +47,26 @@ const LoginButton = styled(Button)`
   }
 `;
 
-interface Props {
-  url: string
-}
+const scopes = [
+  'streaming',
+  'user-read-recently-played',
+  'user-read-playback-state',
+  'user-top-read',
+  'user-modify-playback-state',
+  'user-follow-read',
+  'user-library-read',
+  'user-library-modify',
+  'user-read-email',
+  'user-read-private'
+];
 
-const Login: React.FC<Props> = ({url}) => {
+const url = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://spotify-typescript.herokuapp.com'
+
+const AUTH_URL =
+`https://accounts.spotify.com/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&response_type=code&redirect_uri=${url}&scope=${scopes.join('%20')}`
+
+
+const Login = () => {
 
   return(
     <LoginContainer>
@@ -64,7 +79,7 @@ const Login: React.FC<Props> = ({url}) => {
         <LoginText>Explore Your Music Here!</LoginText>
         <LoginButton variant = 'contained'>
           <a
-            href = {url + '/login'}
+            href = {AUTH_URL}
             style = {{color: 'white', textDecoration: 'none'}}
           >
             Login spotify
